@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		.Liked{
+			background: #b82800;
+		}
+	</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  liked(); 	
+});
+
+function liked() {
+
+	 if(localStorage.getItem('like') == null || localStorage.getItem('like') =="null" || localStorage.getItem('like') ==""){
+	 } else {
+	 	myarray = localStorage.getItem('like').split(',');
+	 	for(var i=0; i<myarray.length;i++) {
+	
+		$("."+myarray [i]).addClass("Liked");
+	 }		
+	} 
+	
+}
+
+ function likeMe(myfav) {
+
+
+ 	$(this).toggleClass('Liked');
+
+    var a = [];
+    if(localStorage.getItem('like') == null || localStorage.getItem('like') =="null"){
+    	a.push(myfav);
+
+		localStorage.setItem('like', [a]);
+    	liked();
+    } else {
+
+    	
+
+    	if(localStorage.getItem('like').length == 0){
+			localStorage.setItem('like', "null");
+		}
+
+
+    	a.push(myfav);
+		a.push(localStorage.getItem('like'));
+
+		myarray = localStorage.getItem('like').split(',');
+    	var count = 0; 
+
+
+    	for(var i=0; i<myarray.length; i++) {
+		    //Here we are going to remove 'mouse'
+		    if(myarray[i] == myfav) {
+		        myarray .splice(i, 1);
+		        count = count + 1;
+		        $("."+myfav).removeClass("Liked");
+		    }
+		}
+		localStorage.setItem('like', [myarray]);		
+
+		if(count == 0) {
+		    myarray.push(myfav); //Add the value at last - use 'unshife' to add at beginning 
+		    localStorage.setItem('like', [myarray]);
+		    liked();
+		}
+		liked();
+		$(this).toggleClass("Liked");		
+    }
+	
+  }
+
+
+
+</script>
+</head>
+<body>
+
+<p>Chose Your Faviorate</p>
+
+<button id="" class="Rat" onclick="likeMe('Rat')">Rat</button>
+<button id="" class="Mouse" onclick="likeMe('Mouse')">Mouse</button>
+<button id="" class="Dog" onclick="likeMe('Dog')">Dog</button>
+<button id="" class="Horse" onclick="likeMe('Horse')">Horse</button>
+<button id="" class="Cow" onclick="likeMe('Cow')">Cow</button>
+
+
+</body>
+</html>
